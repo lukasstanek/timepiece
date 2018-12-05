@@ -48,7 +48,17 @@ fun evaluateTodaysUsage() {
         }
         list
     }.also {
-        println(it.joinToString("\n"))
+        val colWidths = mutableListOf(0,0)
+        it.forEach {
+            if (it.duaration.toString().length > colWidths[0]) colWidths[0] = it.duaration.toString().length
+            if (it.app.length > colWidths[1]) colWidths[1] = it.app.length
+        }
+
+        it.forEach{
+            println("${it.endTime} | ${it.duaration.toString().padEnd(colWidths[0], ' ')} | ${it.app.padEnd(colWidths[1], ' ')}|${it.windowTitle}")
+        }
+        val durTotal = it.fold(0L) { a, b -> a + b.duaration}
+        println(durTotal / 60)
     }
 
 }

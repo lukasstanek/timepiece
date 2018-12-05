@@ -1,6 +1,5 @@
 package timepiece
 
-import java.time.Duration
 import java.time.Instant
 
 data class ActiveWindowPeriod(
@@ -9,4 +8,6 @@ data class ActiveWindowPeriod(
     var duaration: Long = 0,
     val windowTitle: String
 ) {
+    val app = windowTitle.substringAfterLast("- ")
+
 }
