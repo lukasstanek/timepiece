@@ -65,7 +65,7 @@ suspend fun listenForInputEvents() {
         process.inputStream.bufferedReader().forEachLine {
             if(it.startsWith("EVENT type 3") || it.startsWith("EVENT type 6")){
                 timestampLastInput = Instant.now()
-                println(it)
+//                println(it)
             }
         }
     }
