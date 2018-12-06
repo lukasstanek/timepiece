@@ -20,7 +20,7 @@ const val timeUntilInactivity = 60 * 5 // in secs
 var timestampLastInput: Instant = Instant.now()
 
 fun main(args: Array<String>){
-    if (args.size > 1 && args[0].equals("report")){
+    if (args.size > 0 && args[0] == "report"){
         reportOnTimeTracked()
     }else{
         trackActivity()
@@ -40,7 +40,7 @@ fun periodicallyCheckWindowTitle() {
     Timer().schedule(100, windowTitleInterval) {
         "xdotool getwindowfocus getwindowname".runCommand()?.trim()?.apply {
             val file = File(logFile)
-            file.exists()
+
             val activeWindowRecord = ActiveWindowRecord(Instant.now(), this)
 
             var activity = activeWindowRecord.windowTitle
