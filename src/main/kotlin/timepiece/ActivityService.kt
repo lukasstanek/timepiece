@@ -15,7 +15,7 @@ class ActivityService {
             ActiveWindowRecord(Instant.parse(split[0]), split[1])
         }.filter {
             now == it.date.truncatedTo(ChronoUnit.DAYS)
-        }.fold(mutableListOf<ActiveWindowPeriod>()){
+        }.fold(mutableListOf()){
                 list, it ->
             val lastOrNull = list.lastOrNull()
             if(lastOrNull == null){
