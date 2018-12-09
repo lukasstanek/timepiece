@@ -8,6 +8,6 @@ import tornadofx.UIComponent
 
 class TimepieceUi: App(Root::class){
     override fun createPrimaryScene(view: UIComponent): Scene {
-        return Scene(view.root, 800.0, 600.0)
+        return Scene(view.root, 1200.0, 600.0)
     }
 }

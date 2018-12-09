@@ -1,4 +1,4 @@
-package timepiece
+package timepiece.data
 
 import java.time.Instant
 

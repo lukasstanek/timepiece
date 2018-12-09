@@ -1,29 +1,21 @@
 package timepiece.ui.views
 
-import javafx.collections.FXCollections
 import javafx.collections.ObservableList
-import javafx.event.EventType
-import javafx.scene.Scene
-import timepiece.ActiveWindowPeriod
-import timepiece.ActivityService
+import timepiece.data.ActiveWindowPeriod
 import timepiece.ui.controller.RootController
 import timepiece.util.getTimeOfDay
 import tornadofx.*
-import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 
-class Root: View() {
+class Root: View("Activity Overview - Timepiece") {
     val controller: RootController by inject()
 
     val records: ObservableList<ActiveWindowPeriod>
 
     init {
         records = controller.getActivityForDate()
-        primaryStage.isMaximized = true
     }
-
-//    val tableView =
 
     override val root = vbox {
         tableview(records) {
@@ -43,12 +35,18 @@ class Root: View() {
                     param.value.endTime.getTimeOfDay()
                 }
             }
-            readonlyColumn("Duration (s)", ActiveWindowPeriod::duaration)
+            readonlyColumn("Duration", ActiveWindowPeriod::duaration)
             readonlyColumn("App", ActiveWindowPeriod::app)
             readonlyColumn("Window", ActiveWindowPeriod::windowTitle)
 
             resizeColumnsToFitContent()
             fitToParentSize()
+
+            scrollTo(records.size - 1)
+
+            records.onChange {
+                this.scrollTo(records.size - 1)
+            }
         }.also {
             primaryStage.sizeToScene()
         }
