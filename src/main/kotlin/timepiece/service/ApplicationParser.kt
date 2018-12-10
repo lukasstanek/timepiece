@@ -6,7 +6,9 @@ class ApplicationParser {
     companion object {
         val intellij = Regex("(?<title>^.* \\[.*\\]) -.*- (?<app>IntelliJ IDEA)\$")
         val chrome = Regex("^(?<title>.*) - (?<app>Google Chrome)\$")
-        val regexes = listOf(intellij, chrome)
+        val chromium = Regex("^(?<title>.*) - (?<app>Chromium)\$")
+        val slack = Regex("^(?<app>Slack) - (?<title>.*)\$")
+        val regexes = listOf(intellij, chrome, chromium, slack)
     }
 
 
