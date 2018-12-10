@@ -1,7 +1,8 @@
-package timepiece.tracking
+package timepiece.tracking.linux
 
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import timepiece.tracking.ActivityTracker
 import java.time.Instant
 import kotlin.coroutines.suspendCoroutine
 

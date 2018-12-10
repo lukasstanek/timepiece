@@ -1,17 +1,12 @@
 package timepiece
 
-import java.io.File
-import java.io.IOException
-import java.time.Duration
-import java.time.Instant
-import java.time.temporal.ChronoUnit
-import java.util.*
-import java.util.concurrent.TimeUnit
-import kotlin.concurrent.schedule
+import com.sun.jna.Platform
 import kotlin.coroutines.suspendCoroutine
 import kotlinx.coroutines.*
-import timepiece.tracking.ActiveWindowTracker
-import timepiece.tracking.InputDeviceTracker
+import timepiece.tracking.ActivityTracker
+import timepiece.tracking.linux.ActiveWindowTracker
+import timepiece.tracking.linux.InputDeviceTracker
+import timepiece.tracking.windows.ActiveWindowTrackerWindows
 import timepiece.ui.TimepieceUi
 import tornadofx.launch
 
@@ -26,11 +21,8 @@ fun main(args: Array<String>){
     GlobalScope.launch {
         launchUi()
     }
-    if (args.size > 0 && args[0] == "report"){
-        reportOnTimeTracked()
-    }else{
-        trackActivity()
-    }
+    trackActivity()
+
 
     launch<TimepieceUi>()
 
@@ -42,21 +34,20 @@ suspend fun launchUi(){
 }
 
 fun trackActivity() {
+    when(Platform.getOSType()){
+        Platform.WINDOWS -> getTrackerWindows().forEach(ActivityTracker::trackActivity)
+        Platform.LINUX -> getTrackerLinux().forEach(ActivityTracker::trackActivity)
+        else -> println("Operating system not supported")
+    }
+}
+
+fun getTrackerWindows(): List<ActivityTracker> {
+    return listOf(ActiveWindowTrackerWindows())
+}
+
+fun getTrackerLinux(): List<ActivityTracker> {
     val inputDeviceTracker = InputDeviceTracker()
     val activeWindowTracker = ActiveWindowTracker(inputDeviceTracker)
-
-    inputDeviceTracker.trackActivity()
-    activeWindowTracker.trackActivity()
+    return listOf(inputDeviceTracker, activeWindowTracker)
 }
-
-
-
-
-
-
-fun reportOnTimeTracked() {
-
-
-}
-
 

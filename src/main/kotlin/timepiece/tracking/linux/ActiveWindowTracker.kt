@@ -1,9 +1,10 @@
-package timepiece.tracking
+package timepiece.tracking.linux
 
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import timepiece.*
 import timepiece.data.ActiveWindowRecord
+import timepiece.tracking.ActivityTracker
 import timepiece.util.runCommand
 import java.io.File
 import java.time.Duration
@@ -12,7 +13,8 @@ import java.util.*
 import kotlin.concurrent.schedule
 import kotlin.coroutines.suspendCoroutine
 
-class ActiveWindowTracker(private val inputDeviceTracker: InputDeviceTracker): ActivityTracker {
+class ActiveWindowTracker(private val inputDeviceTracker: InputDeviceTracker):
+    ActivityTracker {
 
     override fun trackActivity() {
         GlobalScope.launch {
