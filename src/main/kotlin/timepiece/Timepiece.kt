@@ -1,14 +1,13 @@
 package timepiece
 
 import com.sun.jna.Platform
-import kotlin.coroutines.suspendCoroutine
-import kotlinx.coroutines.*
 import timepiece.tracking.ActivityTracker
 import timepiece.tracking.linux.ActiveWindowTracker
 import timepiece.tracking.linux.InputDeviceTracker
 import timepiece.tracking.windows.ActiveWindowTrackerWindows
 import timepiece.ui.TimepieceUi
 import tornadofx.launch
+
 
 const val ACTIVITY_INACTIVE = "INACTIVE"
 
@@ -17,24 +16,13 @@ const val windowTitleInterval: Long = 60 * 1000
 const val timeUntilInactivity = 60 * 5 // in secs
 
 
-fun main(args: Array<String>){
-    GlobalScope.launch {
-        launchUi()
-    }
+fun main(args: Array<String>) {
     trackActivity()
-
-
     launch<TimepieceUi>()
-
-}
-
-suspend fun launchUi(){
-    return suspendCoroutine {
-    }
 }
 
 fun trackActivity() {
-    when(Platform.getOSType()){
+    when (Platform.getOSType()) {
         Platform.WINDOWS -> getTrackerWindows().forEach(ActivityTracker::trackActivity)
         Platform.LINUX -> getTrackerLinux().forEach(ActivityTracker::trackActivity)
         else -> println("Operating system not supported")
