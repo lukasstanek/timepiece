@@ -21,19 +21,19 @@ class RootController: Controller() {
 
     init {
         activityData = activityService.getActivityForDate(Instant.now()).observable()
-        GlobalScope.launch {
-            updateData()
-        }
+        updateData()
     }
 
     fun getActivityForDate(): ObservableList<ActiveWindowPeriod> {
         return activityData
     }
 
-    suspend fun updateData(){
-        return suspendCoroutine {
-            Timer().schedule(windowTitleInterval, windowTitleInterval){
-                activityData.setAll(activityService.getActivityForDate(Instant.now()))
+    private fun updateData(){
+        Timer().schedule(windowTitleInterval, windowTitleInterval){
+            runAsync {
+                activityService.getActivityForDate(Instant.now())
+            } ui {
+                activityData.setAll(it)
             }
         }
     }
