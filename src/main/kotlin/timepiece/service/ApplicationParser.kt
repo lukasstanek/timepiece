@@ -4,7 +4,7 @@ import timepiece.data.Application
 
 class ApplicationParser {
     companion object {
-        val intellij = Regex("(?<title>^.* \\[.*\\]) -.*- (?<app>IntelliJ IDEA)\$")
+        val intellij = Regex("^(?<title>.* \\[.*\\]) -.*- (?<app>IntelliJ IDEA)\$")
         val chrome = Regex("^(?<title>.*) - (?<app>Google Chrome)\$")
         val chromium = Regex("^(?<title>.*) - (?<app>Chromium)\$")
         val slack = Regex("^(?<app>Slack) - (?<title>.*)\$")

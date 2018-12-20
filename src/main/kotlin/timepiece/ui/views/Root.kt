@@ -1,6 +1,8 @@
 package timepiece.ui.views
 
 import javafx.collections.ObservableList
+import javafx.geometry.Pos
+import javafx.scene.layout.Priority
 import timepiece.data.ActiveWindowPeriod
 import timepiece.ui.controller.RootController
 import timepiece.util.getTimeOfDay
@@ -18,6 +20,32 @@ class Root: View("Activity Overview - Timepiece") {
     }
 
     override val root = vbox {
+            hbox {
+                isFillWidth = true
+                region {
+                    hgrow = Priority.ALWAYS
+                }
+                button {
+                    text = "<"
+                    action {
+                        controller.showPreviousDay()
+                    }
+                }
+                label {
+                    textProperty().bind(controller.currentDay)
+                    alignment = Pos.CENTER
+                }
+                button {
+                    text = ">"
+                    action {
+                        controller.showNextDay()
+                    }
+                }
+                region {
+                    hgrow = Priority.ALWAYS
+                }
+            }
+
         tableview(records) {
             column("Date", String::class){
                 value { param ->
