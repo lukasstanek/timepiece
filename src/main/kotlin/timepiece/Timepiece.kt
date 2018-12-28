@@ -1,6 +1,7 @@
 package timepiece
 
 import com.sun.jna.Platform
+import timepiece.service.ExchangeAccessService
 import timepiece.tracking.ActivityTracker
 import timepiece.tracking.linux.ActiveWindowTracker
 import timepiece.tracking.linux.InputDeviceTracker
@@ -18,6 +19,7 @@ const val timeUntilInactivity = 60 * 5 // in secs
 
 fun main(args: Array<String>) {
     trackActivity()
+    ExchangeAccessService()
     launch<TimepieceUi>()
 }
 

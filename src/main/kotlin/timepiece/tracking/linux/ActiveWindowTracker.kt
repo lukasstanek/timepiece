@@ -31,9 +31,6 @@ class ActiveWindowTracker(private val inputDeviceTracker: InputDeviceTracker):
                     val activeWindowRecord = ActiveWindowRecord(Instant.now(), this)
 
                     var activity = activeWindowRecord.windowTitle
-                    if(Duration.between(inputDeviceTracker.timestampLastInput,  Instant.now()).toMinutes()*60 > timeUntilInactivity){
-                        activity = ACTIVITY_INACTIVE
-                    }
 
                     val record = "${activeWindowRecord.date},$activity\n"
                     file.appendText(record)
